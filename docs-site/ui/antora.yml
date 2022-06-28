@@ -2,5 +2,4 @@ name: ocelot
 title: UI
 version: 2.0
 nav:
-- modules/ROOT/nav.adoc
 - modules/ui-module/nav.adoc
