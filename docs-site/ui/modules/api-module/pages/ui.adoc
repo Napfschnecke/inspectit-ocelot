@@ -1,4 +1,4 @@
-= InspectIT API Doc
+= InspectIT UI Doc
 Doc Writer <doc@example.com>
 :reproducible:
 :listing-caption: Listing
