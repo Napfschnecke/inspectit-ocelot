@@ -1,0 +1,11 @@
+= InspectIT UI Doc
+Doc Writer <doc@example.com>
+:reproducible:
+:listing-caption: Listing
+:source-highlighter: rouge
+:toc:
+
+== Introduction
+
+Put stuff about our UI here :)
+
