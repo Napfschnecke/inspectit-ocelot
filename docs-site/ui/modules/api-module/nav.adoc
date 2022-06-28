@@ -1,1 +1,1 @@
-* xref:api.adoc[API]
+* xref:ui.adoc[API]
