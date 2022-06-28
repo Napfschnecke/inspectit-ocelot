@@ -1,0 +1,5 @@
+name: ocelot-configserver
+title: Config Server
+version: 1.0
+nav:
+- modules/ROOT/nav.adoc

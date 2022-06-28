@@ -1,0 +1,33 @@
+= InspectIT API Doc
+Doc Writer <doc@example.com>
+:reproducible:
+:listing-caption: Listing
+:source-highlighter: rouge
+:toc:
+
+== Introduction
+
+Some Information about our various APIs
+
+[square]
+* Wow
+* An
+* Update
+
+== Main
+
+Here's how you say "`Hello, World!`" in Kotlin:
+
+
+[source,kotlin]
+----
+
+fun main() {
+    println("Hello World")
+}
+----
+
+== Conclusion
+
+That's all for now, folks!
+
