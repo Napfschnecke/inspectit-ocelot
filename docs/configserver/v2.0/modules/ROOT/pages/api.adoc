@@ -1,4 +1,4 @@
-= InspectIT API Doc
+= InspectIT API Doc v2.0
 Doc Writer <doc@example.com>
 :reproducible:
 :listing-caption: Listing
@@ -9,25 +9,5 @@ Doc Writer <doc@example.com>
 
 Some Information about our various APIs
 
-[square]
-* Wow
-* An
-* Update
-
-== Main
-
-Here's how you say "`Hello, World!`" in Kotlin:
-
-
-[source,kotlin]
-----
-
-fun main() {
-    println("Hello World")
-}
-----
-
-== Conclusion
-
-That's all for now, folks!
+== Something Else
 

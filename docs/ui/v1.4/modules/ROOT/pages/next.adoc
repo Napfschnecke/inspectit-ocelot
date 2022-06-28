@@ -1,4 +1,4 @@
-= Next.JS
+= Next.JS v1.4
 Doc Writer <doc@example.com>
 :reproducible:
 :listing-caption: Listing
@@ -8,4 +8,7 @@ Doc Writer <doc@example.com>
 == Introduction
 
 Put stuff about our Next.JS here :)
+
+== New in 1.4
+Nothing :)
 

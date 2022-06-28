@@ -1,5 +1,4 @@
-= Concept v2
-Doc Writer <doc@example.com>
+= Doc Concept v2.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge
@@ -27,7 +26,6 @@ fun main() {
 }
 ----
 
-== Conclusion
-
-That's all for now, folks!
+== New in 2.0
+Nothing :)
 

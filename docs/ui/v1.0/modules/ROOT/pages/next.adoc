@@ -1,5 +1,4 @@
-= Next.JS
-Doc Writer <doc@example.com>
+= Next.JS v1.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge

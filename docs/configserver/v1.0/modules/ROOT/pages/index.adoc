@@ -1,5 +1,4 @@
-= Concept v2
-Doc Writer <doc@example.com>
+= Doc Concept v1.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge

@@ -1,5 +1,4 @@
-= InspectIT UI Doc
-Doc Writer <doc@example.com>
+= InspectIT UI Doc v1.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge
