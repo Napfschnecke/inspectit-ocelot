@@ -1,0 +1,33 @@
+= Concept v2
+Doc Writer <doc@example.com>
+:reproducible:
+:listing-caption: Listing
+:source-highlighter: rouge
+:toc:
+
+== Introduction
+
+A paragraph followed by an unordered list{empty}footnote:[AsciiDoc supports unordered, ordered, and description lists.] with square bullets.footnote:[You may choose from square, disc, and circle for the bullet style.]
+
+[square]
+* Wow
+* An
+* Update
+
+== Main
+
+Here's how you say "`Hello, World!`" in Kotlin:
+
+
+[source,kotlin]
+----
+
+fun main() {
+    println("Hello World")
+}
+----
+
+== Conclusion
+
+That's all for now, folks!
+

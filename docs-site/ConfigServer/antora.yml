@@ -1,5 +1,5 @@
 name: ocelot
-title: InspectIT Ocelot
+title: Config Server
 version: 2.0
 nav:
 - modules/ROOT/nav.adoc
