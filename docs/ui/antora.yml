@@ -1,5 +1,6 @@
 name: ocelot-ui
 title: UI
-version: 2.0
+version: 1.7
+start_page: ROOT:ui.adoc
 nav:
-- modules/ui-module/nav.adoc
+- modules/ROOT/nav.adoc
