@@ -1,4 +1,4 @@
-= InspectIT UI Doc v1.0
+= InspectIT UI Doc v2.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge
@@ -8,3 +8,4 @@
 
 Put stuff about our UI here :)
 
+== New Stuff

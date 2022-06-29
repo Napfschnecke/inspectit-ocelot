@@ -1,4 +1,4 @@
-= Doc Concept v1.0
+= Doc Concept v2.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge
@@ -29,4 +29,6 @@ fun main() {
 == Conclusion
 
 That's all for now, folks!
+
+== New Stuff
 

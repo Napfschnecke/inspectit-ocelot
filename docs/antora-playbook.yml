@@ -4,7 +4,7 @@ site:
 content:
   sources:
   - url: https://github.com/Napfschnecke/inspectit-ocelot.git
-    branches: concept/ascii-ssg-branches-*
+    branches: concept/ascii-ssg-branches*
     start_paths: docs/*
 ui:
   bundle:
