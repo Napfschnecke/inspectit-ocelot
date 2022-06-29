@@ -1,4 +1,4 @@
-= InspectIT UI Doc v2.0
+= InspectIT UI Doc v3.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge

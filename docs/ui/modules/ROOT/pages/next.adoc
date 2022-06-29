@@ -1,4 +1,4 @@
-= Next.JS v2.0
+= Next.JS v3.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge
