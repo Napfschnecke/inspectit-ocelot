@@ -4,8 +4,8 @@ site:
 content:
   sources:
   - url: https://github.com/Napfschnecke/inspectit-ocelot.git
-    branches: concept/ascii-ssg-v2
-    start_paths: docs/*/*
+    branches: concept/ascii-ssg-branches-*
+    start_paths: docs/*
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
