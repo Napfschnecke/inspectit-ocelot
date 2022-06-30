@@ -1,2 +1,2 @@
 * xref:ui.adoc[General Info]
-* xref:next.adoc[Next.JS]
+** xref:next.adoc[Next.JS]
