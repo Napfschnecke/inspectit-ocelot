@@ -3,7 +3,7 @@ on:
   push:
     branches: [concept/ascii-ssg-pages]
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
