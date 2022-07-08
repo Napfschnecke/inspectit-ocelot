@@ -11,6 +11,7 @@ import { configurationSelectors, configurationActions } from '../../redux/ducks/
 import { getConfigurationType } from '../../lib/configuration-utils';
 import { CONFIGURATION_TYPES } from '../../data/constants';
 import MethodConfigurationEditor from './method-configuration-editor/MethodConfigurationEditor';
+import Markdown from 'marked-react';
 
 const AceEditor = dynamic(() => import('./yaml-editor/AceEditor'), { ssr: false });
 const TreeTableEditor = dynamic(() => import('./visual-editor/TreeTableEditor'), { ssr: false });
@@ -39,6 +40,8 @@ const EditorView = ({
   loading,
   children,
   readOnly,
+  isDirectory,
+  filename,
   showVisualConfigurationView,
   onToggleVisualConfigurationView,
   sidebar,
@@ -54,6 +57,7 @@ const EditorView = ({
   // derived variables
   const isLiveSelected = currentVersion === 'live';
   const configurationType = getConfigurationType(value);
+  const isYaml = filename ? filename.endsWith('.yml') : false;
 
   const selectlatestVersion = () => {
     dispatch(configurationActions.selectVersion(null));
@@ -61,9 +65,15 @@ const EditorView = ({
 
   let editorContent;
 
-  if (configurationType == CONFIGURATION_TYPES.METHOD_CONFIGURATION) {
+  if (isDirectory) {
+    editorContent = (
+      <div style={{ margin: '20px', maxWidth: '50vw' }}>
+        <Markdown gfm={true}>{value}</Markdown>
+      </div>
+    );
+  } else if (configurationType === CONFIGURATION_TYPES.METHOD_CONFIGURATION) {
     editorContent = <MethodConfigurationEditor yamlConfiguration={value} />;
-  } else if (configurationType == CONFIGURATION_TYPES.YAML && showVisualConfigurationView) {
+  } else if (configurationType === CONFIGURATION_TYPES.YAML && showVisualConfigurationView) {
     editorContent = (
       <YamlParser yamlConfig={value} onUpdate={onChange}>
         {(onUpdate, config) => (
@@ -90,6 +100,7 @@ const EditorView = ({
         canSave={canSave}
         onSave={onSave}
         readOnly={readOnly}
+        file={filename}
       />
     );
   }
@@ -120,6 +131,7 @@ const EditorView = ({
         .editor-container {
           position: relative;
           flex-grow: 1;
+          overflow: scroll;
         }
         .loading-overlay {
           position: absolute;
@@ -214,7 +226,7 @@ const EditorView = ({
         )}
       </div>
 
-      {notificationText && configurationType == CONFIGURATION_TYPES.YAML ? (
+      {notificationText && configurationType == CONFIGURATION_TYPES.YAML && isYaml ? (
         <Notificationbar text={notificationText} isError={isErrorNotification} icon={notificationIcon} />
       ) : null}
     </div>
@@ -256,6 +268,10 @@ EditorView.propTypes = {
   loading: PropTypes.bool,
   /** Wheter the editor should be in read-only mode */
   readOnly: PropTypes.bool,
+  /** Wheter the selection is a directory */
+  isDirectory: PropTypes.bool,
+  /** The name of the selected file, including path */
+  filename: PropTypes.string,
   /** Weather a visual configuration view is active showing config properties in a tree */
   showVisualConfigurationView: PropTypes.bool,
   /** Function to react on the change of the enable disable visual configuration view */

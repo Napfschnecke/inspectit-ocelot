@@ -8,6 +8,7 @@ import { InputText } from 'primereact/inputtext';
 import { configurationUtils, configurationActions } from '../../../../redux/ducks/configuration';
 import PropTypes from 'prop-types';
 import yaml from 'js-yaml';
+import { Dropdown } from 'primereact/dropdown';
 
 /** Data */
 import { CONFIGURATION_TYPES } from '../../../../data/constants';
@@ -26,13 +27,17 @@ class CreateDialog extends React.Component {
       /** In case the input name is invalid, a meaningful error message is placed here */
       error: null,
       filename: '',
+      suffix: props.suffix ?? '.yml',
+      suffixSelectItems: [
+        { label: '.yml', value: '.yml' },
+        { label: '.md', value: '.md' },
+      ],
     };
     this.input = React.createRef();
   }
 
   render() {
     const { directoryMode, configurationType } = this.props;
-
     const dialogMessage = directoryMode ? 'Folder' : configurationType.name + ' File';
 
     return (
@@ -63,7 +68,18 @@ class CreateDialog extends React.Component {
             placeholder={dialogMessage + ' Name'}
             onChange={(e) => this.filenameChanged(e.target.value)}
           />
-          {!this.props.directoryMode && <span className="p-inputgroup-addon">.yml</span>}
+          {!this.props.directoryMode && (
+            <Dropdown
+              appendTo={document.body}
+              disabled={this.props.suffix !== undefined}
+              className="p-dropdown"
+              value={this.props.suffix ?? this.state.suffix}
+              options={this.state.suffixSelectItems}
+              onChange={(e) => {
+                this.setState({ suffix: e.value });
+              }}
+            />
+          )}
         </div>
         {this.state.error && (
           <div style={{ width: '100%', paddingTop: '0.5em' }}>
@@ -130,12 +146,11 @@ class CreateDialog extends React.Component {
   createFileOrFolder = () => {
     const { configurationType, createDirectory, directoryMode, writeFile, onHide } = this.props;
     const fullPath = this.getAbsolutePath(this.state.filename);
-
     if (directoryMode) {
       createDirectory(fullPath, true, true);
     } else {
       let content = '';
-      if (configurationType !== CONFIGURATION_TYPES.YAML) {
+      if (configurationType === CONFIGURATION_TYPES.METHOD_CONFIGURATION) {
         const fileHeader = '# {"type": "' + configurationType.name + '"}\n';
         const fileContent = yaml.dump(configurationType.template);
         content = fileHeader + fileContent;
@@ -152,7 +167,7 @@ class CreateDialog extends React.Component {
     const { directoryMode, filePath } = this.props;
     const { isDirectory } = this.state;
 
-    const suffix = directoryMode ? '' : '.yml';
+    const suffix = directoryMode ? '' : this.state.suffix;
     if (!filePath) {
       return '/' + filename + suffix;
     } else if (isDirectory) {
@@ -188,6 +203,10 @@ CreateDialog.propTypes = {
   onHide: PropTypes.func,
   /** Contains configuration type name and content */
   configurationType: PropTypes.object,
+  /** Used to define the type of file being created and locks the dropdown */
+  suffix: PropTypes.string,
+  /** Represents the file structure found in the working directory*/
+  files: PropTypes.array,
 
   createDirectory: PropTypes.func,
   writeFile: PropTypes.func,

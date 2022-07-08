@@ -8,11 +8,15 @@ import 'ace-builds/src-noconflict/ext-keybinding_menu';
 
 //include supported themes and modes here
 import 'ace-builds/src-noconflict/mode-yaml';
+import 'ace-builds/src-noconflict/mode-markdown';
 import 'ace-builds/src-noconflict/theme-cobalt';
+import { getModeForPath } from 'ace-builds/src-noconflict/ext-modelist';
 import InspectitOcelotMode from './InspectitOcelotMode';
 import axios from '../../../lib/axios-api';
+import PropTypes from 'prop-types';
 
 let rulesToGenerate;
+let inspectitOcelotMode;
 
 const saveCommand = (doSave) => {
   return {
@@ -66,21 +70,26 @@ class AceEditor extends React.Component {
     ace.config.loadModule('ace/ext/keybinding_menu', function (module) {
       module.init(editorRef);
     });
+
     if (this.props.onCreate) {
       this.props.onCreate(this.editor);
     }
 
     this.configureEditor();
 
+    const resolvedMode = getModeForPath(this.props.file).mode;
+    this.editor.getSession().setMode(resolvedMode);
+
     // rulesToGenerate is a map whose contents determine what the highlighting rules need to be. The contents are
-    // retrieved over the config-server's REST API. Until the results are returned the standard YAML highlighting mode
-    // is used. When the results have been returned, the mode is set to InspectitOcelotMode.
-    this.editor.getSession().setMode('ace/mode/yaml');
+    // retrieved over the config-server's REST API. When the results have been returned, the mode is set to InspectitOcelotMode.
     axios
       .get('highlight-rules')
       .then((response) => {
         rulesToGenerate = response.data;
-        this.editor.getSession().setMode(new InspectitOcelotMode());
+        inspectitOcelotMode = new InspectitOcelotMode();
+        if (resolvedMode === 'ace/mode/yaml') {
+          this.editor.getSession().setMode(inspectitOcelotMode);
+        }
       })
       .catch((error) => {
         console.log('Encountered error when retrieving Map to create custom Highlighting mode:');
@@ -92,6 +101,7 @@ class AceEditor extends React.Component {
 
   componentDidUpdate() {
     this.configureEditor();
+    this.updateSyntaxHighlighting();
     this.updateValue();
   }
 
@@ -123,6 +133,11 @@ class AceEditor extends React.Component {
     }
   };
 
+  updateSyntaxHighlighting = () => {
+    const resolvedMode = getModeForPath(this.props.file).mode;
+    this.editor.getSession().setMode(resolvedMode === 'ace/mode/yaml' ? inspectitOcelotMode : resolvedMode);
+  };
+
   executeCommand = (command) => {
     this.editor.execCommand(command);
   };
@@ -139,6 +154,29 @@ class AceEditor extends React.Component {
     return value.replace(/\t/g, '  ');
   };
 }
+
+AceEditor.propTypes = {
+  /** The value being displayed in the editor */
+  value: PropTypes.string,
+  /** The reference to the editor */
+  editorRef: PropTypes.object,
+  /** The theme of the editor */
+  theme: PropTypes.string,
+  /** The configuration of the editor */
+  options: PropTypes.object,
+  /** If the editor is readOnly or editable */
+  readOnly: PropTypes.bool,
+  /** If the current changes are able to be saved to the file */
+  canSave: PropTypes.bool,
+  /** Callback function on creation */
+  onCreate: PropTypes.func,
+  /** Callback function on change of the editors value */
+  onChange: PropTypes.func,
+  /** Callback function on save of the editors value */
+  onSave: PropTypes.func,
+  /** The currently selected file being viewed */
+  file: PropTypes.string,
+};
 
 // needed for getting the contents of rulesToGenerate to InspectitOcelotHighlightingRules
 export { rulesToGenerate };

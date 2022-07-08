@@ -106,23 +106,22 @@ export const fetchSelectedFile = () => {
       const file = configurationUtils.getFile(files, selection);
       const isDirectory = configurationUtils.isDirectory(file);
 
-      if (!isDirectory) {
-        const params = {};
-        if (selectedVersion) {
-          params.version = selectedVersion;
-        }
-
-        dispatch({ type: types.FETCH_FILE_STARTED });
-        getFile(selection, params)
-          .then((payload) => {
-            const fileContent = payload;
-            dispatch({ type: types.FETCH_FILE_SUCCESS, payload: { fileContent } });
-          })
-          .catch((err) => {
-            console.error(err);
-            dispatch({ type: types.FETCH_FILE_FAILURE });
-          });
+      const params = {};
+      if (selectedVersion) {
+        params.version = selectedVersion;
       }
+      let finalFilename = isDirectory ? selection + '/README.md' : selection;
+
+      dispatch({ type: types.FETCH_FILE_STARTED });
+      getFile(finalFilename, params)
+        .then((payload) => {
+          const fileContent = payload;
+          dispatch({ type: types.FETCH_FILE_SUCCESS, payload: { fileContent } });
+        })
+        .catch((err) => {
+          console.error(err);
+          dispatch({ type: types.FETCH_FILE_FAILURE });
+        });
     }
   };
 };

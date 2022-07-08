@@ -170,7 +170,9 @@ class ConfigurationView extends React.Component {
       isLatestVersion,
       canWrite,
     } = this.props;
-    const showEditor = (selection || selectedDefaultConfigFile) && !isDirectory;
+
+    const showEditor = (selection || selectedDefaultConfigFile) && !(isDirectory && fileContent === undefined);
+    const hint = isDirectory ? 'A README.md in this folder will automatically render here.' : 'Select a file to start editing.';
 
     const { path, name } = this.parsePath(selection, selectedDefaultConfigFile);
     const icon = 'pi-' + (isDirectory ? 'folder' : 'file');
@@ -232,7 +234,7 @@ class ConfigurationView extends React.Component {
           showEditor={showEditor}
           value={fileContent}
           schema={schema}
-          hint={'Select a file to start editing.'}
+          hint={hint}
           onSave={this.onSave}
           showConfigurationDialog={this.showConfigurationDialog}
           showConvertWarning={this.showConvertDialog}
@@ -240,12 +242,14 @@ class ConfigurationView extends React.Component {
           onCreate={enableOcelotAutocompletion}
           onChange={this.onChange}
           onRefresh={this.onRefresh}
-          canSave={isContentModified && !yamlError}
+          canSave={isContentModified && !(yamlError && selection.endsWith('.yml'))}
+          filename={selection}
           isErrorNotification={true}
           notificationIcon="pi-exclamation-triangle"
           notificationText={yamlError}
           loading={loading}
           readOnly={readOnly}
+          isDirectory={isDirectory}
           showVisualConfigurationView={showVisualConfigurationView}
           onToggleVisualConfigurationView={toggleVisualConfigurationView}
           sidebar={<ConfigurationSidebar />}
@@ -262,6 +266,7 @@ class ConfigurationView extends React.Component {
           onHide={this.hideCreateDialog}
           filePath={this.state.filePath}
           configurationType={this.state.configurationType}
+          suffix={this.state.configurationType === CONFIGURATION_TYPES.METHOD_CONFIGURATION ? '.yml' : undefined}
         />
         <MoveDialog visible={this.state.isMoveDialogShown} onHide={this.hideMoveDialog} filePath={this.state.filePath} />
 
